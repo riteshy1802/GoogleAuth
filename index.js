@@ -19,29 +19,35 @@ import { getAuth,GoogleAuthProvider,signInWithPopup,onAuthStateChanged } from "h
 
 
   const googleLogin = document.getElementById("google");
-  googleLogin.addEventListener("click",function(){
-
-   signInWithPopup(auth, provider)
-  .then((result) => {
-    const credential = GoogleAuthProvider.credentialFromResult(result);
-    const user = result.user;
-    console.log(user);
-    window.location.href = "./loggedIn.html"
-
-    }).catch((error) => {
-    const errorCode = error.code;
-    const errorMessage = error.message;
-  });
-  })
+  if(googleLogin){
+    
+    googleLogin.addEventListener("click",function(){
+  
+     signInWithPopup(auth, provider)
+    .then((result) => {
+      const credential = GoogleAuthProvider.credentialFromResult(result);
+      const user = result.user;
+      console.log(user);
+      window.location.href = "./loggedIn.html"
+  
+      }).catch((error) => {
+      const errorCode = error.code;
+      const errorMessage = error.message;
+    });
+    })
+  }
 
   function updateUserProfile(user){
     const userName = user.displayName;
     const userEmail = user.email;
     const userProfilePicture = user.photoURL;
 
-    document.getElementById("userName").textContent = userName;
-    document.getElementById("userEmail").textContent = userEmail;
-    document.getElementById("userProfilePicture").src = userProfilePicture;
+    let username = document.getElementById("userName")
+    let email = document.getElementById("userEmail")
+    let pic = document.getElementById("userProfilePicture")
+    username.innerHTML = userName;
+    email.innerHTML = userEmail;
+    pic.src = userProfilePicture;
   }
 
   onAuthStateChanged(auth, (user) => {
@@ -53,3 +59,4 @@ import { getAuth,GoogleAuthProvider,signInWithPopup,onAuthStateChanged } from "h
       console.log("User is signed out");
     }
   });
+  // updateUserProfile(user);
